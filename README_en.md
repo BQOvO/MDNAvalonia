@@ -50,6 +50,7 @@ MFAAvalonia does not include application-specific resources. It is normally inte
 - Accepts compatible local resource archives through drag and drop, then asks for confirmation before updating. Drag-and-drop updates are disabled while tasks are running.
 - Supports DingTalk, Lark, Telegram, Discord, SMTP, WxPusher, QMsg, OneBot, ServerChan, and custom webhook notifications.
 - Supports resource-configurable task dashboard layouts. See [Custom Layout](./docs/en/custom-layout.md).
+- **Task Focus Mode**: Hides other cards when a task starts, keeping only the Live View and Log visible. The window minimizes to the system tray automatically.
 - Resources can configure Sentry telemetry through PI. Diagnostic data is sent only when the resource provides telemetry settings and the user has not disabled "Help improve software."
 
 ## Preview
