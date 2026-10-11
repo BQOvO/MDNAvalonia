@@ -6,6 +6,7 @@ riderModule.iml
 .dotnet-cli/
 .dotnet/
 .idea/
+.vscode/
 artifacts/
 .android-package/
 .tmp-upstream/
