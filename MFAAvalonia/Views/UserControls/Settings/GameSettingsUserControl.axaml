@@ -201,5 +201,25 @@
                 </DockPanel>
             </StackPanel>
         </suki:GlassCard>
+        <!-- Boss Key Setting -->
+        <suki:GlassCard x:Name="BossKeyCard" Margin="0,25,0,0" Padding="25,10,25,10">
+            <StackPanel>
+                <DockPanel>
+                    <ToggleSwitch
+                        Classes="Switch"
+                        DockPanel.Dock="Right"
+                        IsChecked="{Binding Source={x:Static helper:Instances.InstanceTabBarViewModel}, Path=ActiveTab.TaskQueueViewModel.EnableBossKey}"
+                        IsEnabled="{Binding Idle, Source={x:Static helper:Instances.RootViewModel}}"
+                        VerticalAlignment="Top" />
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="{markup:I18n {x:Static helper:LangKeys.BossKey}}"
+                            VerticalAlignment="Center" />
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </suki:GlassCard>
     </StackPanel>
 </UserControl>

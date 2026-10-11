@@ -1869,6 +1869,9 @@
   <data name="TaskFocusMode" xml:space="preserve">
         <value>タスクフォーカスモード</value>
     </data>
+    <data name="BossKey" xml:space="preserve">
+        <value>ボスキー</value>
+    </data>
   <data name="PlayCoverAddress" xml:space="preserve">
         <value>住所</value>
     </data>

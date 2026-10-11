@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2803,6 +2803,15 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
+        if (e.PropertyName == nameof(TaskQueueViewModel.EnableBossKey))
+        {
+            if (DataContext is TaskQueueViewModel vm)
+            {
+                ApplyBossKey(vm);
+            }
+            return;
+        }
+
         if (e.PropertyName == nameof(TaskQueueViewModel.CurrentController))
         {
             UpdateDeviceColumns();
@@ -2908,8 +2917,13 @@ public partial class TaskQueueView : UserControl
 
     private void ApplyBossKey(TaskQueueViewModel vm)
     {
-        if (!ConfigurationManager.Current.GetValue(ConfigurationKeys.ShouldMinimizeToTray, false))
+        if (!vm.EnableBossKey)
         {
+            if (_bossKeyHwnd != IntPtr.Zero)
+            {
+                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
+                _bossKeyHwnd = IntPtr.Zero;
+            }
             return;
         }
 

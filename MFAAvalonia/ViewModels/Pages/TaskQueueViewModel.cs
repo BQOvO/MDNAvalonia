@@ -72,6 +72,7 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
         _enableLiveView = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableLiveView, true);
         _liveViewRefreshRate = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.LiveViewRefreshRate, 30.0);
         _enableTaskFocusMode = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableTaskFocusMode, true);
+        _enableBossKey = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableBossKey, false);
 
         // Initialize LiveView Timer
         _liveViewTimer = new System.Timers.Timer();
@@ -3487,6 +3488,13 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
     partial void OnEnableTaskFocusModeChanged(bool value)
     {
         Processor.InstanceConfiguration.SetValue(ConfigurationKeys.EnableTaskFocusMode, value);
+    }
+
+    [ObservableProperty] private bool _enableBossKey;
+
+    partial void OnEnableBossKeyChanged(bool value)
+    {
+        Processor.InstanceConfiguration.SetValue(ConfigurationKeys.EnableBossKey, value);
     }
 
     partial void OnLiveViewRefreshRateChanged(double value)

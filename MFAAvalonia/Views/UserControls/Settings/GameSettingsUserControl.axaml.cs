@@ -23,6 +23,7 @@ public partial class GameSettingsUserControl : UserControl
         if (OperatingSystem.IsAndroid())
         {
             TaskFocusModeCard.IsVisible = false;
+            BossKeyCard.IsVisible = false;
         }
     }
 }

@@ -1637,6 +1637,9 @@
     <data name="TaskFocusMode" xml:space="preserve">
         <value>任務專注模式</value>
     </data>
+    <data name="BossKey" xml:space="preserve">
+        <value>任務老闆鍵</value>
+    </data>
     <data name="PlayCoverAddress" xml:space="preserve">
         <value>位址</value>
     </data>
