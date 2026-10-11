@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2963,7 +2963,7 @@ public partial class TaskQueueView : UserControl
     {
         if (DataContext is not TaskQueueViewModel vm || !vm.EnableInteractiveLiveView)
             return;
-        if (vm.Processor?.MaaTasker?.Controller is not { IsInitialized: true })
+        if (vm.Processor?.MaaTasker?.Controller?.IsConnected != true)
             return;
         if (LiveViewFrame is null || vm.LiveViewImage is null)
             return;
@@ -2986,7 +2986,7 @@ public partial class TaskQueueView : UserControl
             return;
         if (DataContext is not TaskQueueViewModel vm || !vm.EnableInteractiveLiveView)
             return;
-        if (vm.Processor?.MaaTasker?.Controller is not { IsInitialized: true })
+        if (vm.Processor?.MaaTasker?.Controller?.IsConnected != true)
             return;
         if (LiveViewFrame is null || vm.LiveViewImage is null)
             return;
@@ -3010,7 +3010,7 @@ public partial class TaskQueueView : UserControl
 
         if (DataContext is not TaskQueueViewModel vm || !vm.EnableInteractiveLiveView)
             return;
-        if (vm.Processor?.MaaTasker?.Controller is not { IsInitialized: true })
+        if (vm.Processor?.MaaTasker?.Controller?.IsConnected != true)
             return;
 
         _ = vm.Processor.MaaTasker.Controller.TouchUp(0);
