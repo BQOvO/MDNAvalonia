@@ -1,17 +1,16 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <div align="center">
-  <img alt="MFAAvalonia" src="./docs/images/mfa-logo_512x512.png" width="192" height="192" />
+  <img alt="MDNAvalonia" src="./docs/images/mfa-logo_512x512.png" width="192" height="192" />
 
-# MFAAvalonia
+# MDNAvalonia
+
+> 基于 [MFAAvalonia](https://github.com/MaaXYZ/MFAAvalonia) 的社区分支
 
 MaaFramework 的跨平台通用桌面界面
 
 [![License](https://img.shields.io/github/license/MaaXYZ/MFAAvalonia?style=flat-square&color=4a90d9)](./LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blueviolet?style=flat-square)](https://github.com/MaaXYZ/MFAAvalonia)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/MaaXYZ/MFAAvalonia?style=flat-square&color=00d4aa)](https://github.com/MaaXYZ/MFAAvalonia/commits)
-[![Stars](https://img.shields.io/github/stars/MaaXYZ/MFAAvalonia?style=flat-square&color=ffca28)](https://github.com/MaaXYZ/MFAAvalonia/stargazers)
-[![Mirror酱](https://img.shields.io/badge/Mirror%E9%85%B1-%239af3f6?style=flat-square&logo=countingworkspro&logoColor=4f46e5)](https://mirrorchyan.com/zh/projects?rid=MFAAvalonia&source=mfaagh-badge)
 
 [English](./README_en.md) | **简体中文**
 
@@ -19,9 +18,9 @@ MaaFramework 的跨平台通用桌面界面
 
 ## 项目简介
 
-MFAAvalonia 是基于 [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) 和 [SukiUI](https://github.com/kikipoulet/SukiUI) 构建的 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 通用 GUI。资源开发者通过 Project Interface V2 描述任务、选项、控制器和界面文本，用户即可在桌面端配置并运行自动化任务。
+MDNAvalonia 是 [MFAAvalonia](https://github.com/MaaXYZ/MFAAvalonia) 的社区分支，基于 [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) 和 [SukiUI](https://github.com/kikipoulet/SukiUI) 构建的 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 通用 GUI。资源开发者通过 Project Interface V2 描述任务、选项、控制器和界面文本，用户即可在桌面端配置并运行自动化任务。
 
-MFAAvalonia 本身不包含具体业务资源。通常应将它集成到基于 MaaFramework 的资源项目中使用。
+MDNAvalonia 本身不包含具体业务资源。通常应将它集成到基于 MaaFramework 的资源项目中使用。
 
 ## 主要功能
 
@@ -36,7 +35,7 @@ MFAAvalonia 本身不包含具体业务资源。通常应将它集成到基于 M
 
 - 使用标签页管理多个独立实例，可搜索、重命名、复制实例 ID，并导入或导出实例配置。
 - 支持定时执行、应用启动时批量执行、全局热键和命令行自动启动。
-- 同一路径下已运行的 MFAAvalonia 可接收新的命令行请求，无需重复启动一个进程。
+- 同一路径下已运行的 MDNAvalonia 可接收新的命令行请求，无需重复启动一个进程。
 
 ### 控制器与平台
 
@@ -56,7 +55,7 @@ MFAAvalonia 本身不包含具体业务资源。通常应将它集成到基于 M
 ## 界面预览
 
 <p align="center">
-  <img alt="MFAAvalonia 界面预览" src="./docs/images/preview.png" width="100%" />
+  <img alt="MDNAvalonia 界面预览" src="./docs/images/preview.png" width="100%" />
 </p>
 
 ## 运行要求
@@ -159,9 +158,9 @@ MFAAvalonia.exe [参数]
 
 旧版 `Advanced` 配置已废弃。现有资源应迁移到 Project Interface V2，不应继续依赖旧字段。
 
-### MFAAvalonia 扩展字段
+### MDNAvalonia 扩展字段
 
-MFAAvalonia 在 Project Interface V2 的 `task` 项中额外支持以下字段：
+MDNAvalonia 在 Project Interface V2 的 `task` 项中额外支持以下字段：
 
 | 字段 | 类型 | 默认值 | 说明 |
 |:---|:---|:---|:---|
@@ -189,7 +188,7 @@ MFAAvalonia 在 Project Interface V2 的 `task` 项中额外支持以下字段�
 
 ### 自定义图标
 
-将 `logo.ico` 放置在程序根目录的 `Assets` 文件夹中，即可替换 MFAAvalonia 的窗口和托盘图标。
+将 `logo.ico` 放置在程序根目录的 `Assets` 文件夹中，即可替换 MDNAvalonia 的窗口和托盘图标。
 
 ## 从源码构建
 
@@ -209,9 +208,9 @@ dotnet publish MFAAvalonia.Desktop/MFAAvalonia.Desktop.csproj -c Release -r win-
 
 ## 致谢
 
-MFAAvalonia 使用了 [MaaFramework](https://github.com/MaaXYZ/MaaFramework)、[MaaFramework.Binding.CSharp](https://github.com/MaaXYZ/MaaFramework.Binding.CSharp)、[Avalonia](https://github.com/AvaloniaUI/Avalonia)、[SukiUI](https://github.com/kikipoulet/SukiUI)、[Serilog](https://github.com/serilog/serilog)、[Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)、[Mirror酱](https://github.com/MirrorChyan/docs) 等开源项目与服务。
+MDNAvalonia 基于 [MFAAvalonia](https://github.com/MaaXYZ/MFAAvalonia) 构建，使用了 [MaaFramework](https://github.com/MaaXYZ/MaaFramework)、[MaaFramework.Binding.CSharp](https://github.com/MaaXYZ/MaaFramework.Binding.CSharp)、[Avalonia](https://github.com/AvaloniaUI/Avalonia)、[SukiUI](https://github.com/kikipoulet/SukiUI)、[Serilog](https://github.com/serilog/serilog)、[Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)、[Mirror酱](https://github.com/MirrorChyan/docs) 等开源项目与服务。
 
-感谢所有为 MFAAvalonia 做出贡献的开发者。
+感谢所有为 MFAAvalonia 和 MDNAvalonia 做出贡献的开发者。
 
 <a href="https://github.com/MaaXYZ/MFAAvalonia/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=MaaXYZ/MFAAvalonia&max=1000" alt="Contributors" />

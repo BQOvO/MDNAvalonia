@@ -1,17 +1,16 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <div align="center">
-  <img alt="MFAAvalonia" src="./docs/images/mfa-logo_512x512.png" width="192" height="192" />
+  <img alt="MDNAvalonia" src="./docs/images/mfa-logo_512x512.png" width="192" height="192" />
 
-# MFAAvalonia
+# MDNAvalonia
+
+> A community fork of [MFAAvalonia](https://github.com/MaaXYZ/MFAAvalonia)
 
 A cross-platform desktop interface for MaaFramework
 
 [![License](https://img.shields.io/github/license/MaaXYZ/MFAAvalonia?style=flat-square&color=4a90d9)](./LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blueviolet?style=flat-square)](https://github.com/MaaXYZ/MFAAvalonia)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/MaaXYZ/MFAAvalonia?style=flat-square&color=00d4aa)](https://github.com/MaaXYZ/MFAAvalonia/commits)
-[![Stars](https://img.shields.io/github/stars/MaaXYZ/MFAAvalonia?style=flat-square&color=ffca28)](https://github.com/MaaXYZ/MFAAvalonia/stargazers)
-[![Mirror Chyan](https://img.shields.io/badge/Mirror%20Chyan-%239af3f6?style=flat-square&logo=countingworkspro&logoColor=4f46e5)](https://mirrorchyan.com/zh/projects?rid=MFAAvalonia&source=mfaagh-badge)
 
 **English** | [简体中文](./README.md)
 
@@ -19,9 +18,9 @@ A cross-platform desktop interface for MaaFramework
 
 ## Overview
 
-MFAAvalonia is a general-purpose [MaaFramework](https://github.com/MaaXYZ/MaaFramework) GUI built with [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) and [SukiUI](https://github.com/kikipoulet/SukiUI). Resource developers describe tasks, options, controllers, and interface text through Project Interface V2, allowing users to configure and run automation tasks from a desktop application.
+MDNAvalonia is a community fork of [MFAAvalonia](https://github.com/MaaXYZ/MFAAvalonia), a general-purpose [MaaFramework](https://github.com/MaaXYZ/MaaFramework) GUI built with [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) and [SukiUI](https://github.com/kikipoulet/SukiUI). Resource developers describe tasks, options, controllers, and interface text through Project Interface V2, allowing users to configure and run automation tasks from a desktop application.
 
-MFAAvalonia does not include application-specific resources. It is normally integrated into a MaaFramework-based resource project.
+MDNAvalonia does not include application-specific resources. It is normally integrated into a MaaFramework-based resource project.
 
 ## Features
 
@@ -36,7 +35,7 @@ MFAAvalonia does not include application-specific resources. It is normally inte
 
 - Manages independent instances in tabs, with search, rename, instance ID copy, and instance configuration import/export.
 - Supports schedules, batch actions at application startup, global hotkeys, and command-line automation.
-- A running MFAAvalonia process from the same executable path can receive new command-line requests without starting a duplicate process.
+- A running MDNAvalonia process from the same executable path can receive new command-line requests without starting a duplicate process.
 
 ### Controllers and platforms
 
@@ -56,7 +55,7 @@ MFAAvalonia does not include application-specific resources. It is normally inte
 ## Preview
 
 <p align="center">
-  <img alt="MFAAvalonia preview" src="./docs/images/preview.png" width="100%" />
+  <img alt="MDNAvalonia preview" src="./docs/images/preview.png" width="100%" />
 </p>
 
 ## Requirements
@@ -118,7 +117,7 @@ MFAAvalonia.exe [options]
 | `-h`, `--help` | Show command-line help and exit |
 | `-c <instance>`, `-i <instance>`, `--instance <instance>` | Select an instance by name or ID. Name matching is case-insensitive, and an exact instance ID match takes priority |
 | `--autostart` | Run the tasks currently configured and selected in the target instance. If no instance is specified, the active instance is used |
-| `-q`, `--quit-after-run` | Exit MFAAvalonia after the task started by this command finishes. Only effective with `--autostart` |
+| `-q`, `--quit-after-run` | Exit MDNAvalonia after the task started by this command finishes. Only effective with `--autostart` |
 | `-f`, `--forceStart` | If the target instance is already running, stop its current task and start it again. Only effective with `--autostart` and an instance option |
 
 ### Examples
@@ -159,9 +158,9 @@ MFAAvalonia.exe [options]
 
 The legacy `Advanced` configuration is deprecated. Current resources should migrate to Project Interface V2 and must not depend on legacy fields.
 
-### MFAAvalonia extension fields
+### MDNAvalonia extension fields
 
-MFAAvalonia supports the following additional fields on Project Interface V2 `task` items:
+MDNAvalonia supports the following additional fields on Project Interface V2 `task` items:
 
 | Field | Type | Default | Description |
 |:---|:---|:---|:---|

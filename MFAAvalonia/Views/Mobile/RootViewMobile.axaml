@@ -1,4 +1,4 @@
-﻿<UserControl
+<UserControl
     x:Class="MFAAvalonia.Views.Mobile.RootViewMobile"
     x:DataType="windows:RootViewModel"
     xmlns="https://github.com/avaloniaui"

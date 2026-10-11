@@ -1,1 +1,4 @@
 MFAAvalonia.Android/ThirdParty/Shizuku/shizuku.apk binary
+
+*.axaml text working-tree-encoding=UTF-8
+*.xaml text working-tree-encoding=UTF-8
