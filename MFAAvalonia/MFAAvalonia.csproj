@@ -43,7 +43,7 @@
     </PropertyGroup>
 
     <Target Name="SetGitVersion" BeforeTargets="CoreCompile">
-        <Exec Command="git describe --tags --abbrev=7 --dirty" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low">
+        <Exec Command="git describe --tags --abbrev=0" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low">
             <Output TaskParameter="ConsoleOutput" PropertyName="GitTag" />
         </Exec>
         <PropertyGroup Condition="'$(GitTag)' != ''">
