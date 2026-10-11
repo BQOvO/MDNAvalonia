@@ -535,6 +535,17 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                        <Button
+                            Grid.Column="2"
+                            x:Name="BossKeyToggleBtn"
+                            Classes="BasicTight"
+                            Margin="8,0,0,0"
+                            Click="BossKeyToggleBtn_Click"
+                            ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.BossKey}}">
+                            <Path Data="M16,13H13V16H11V13H8V11H11V8H13V11H16V13M22,12C22,17.52 17.52,22 12,22C6.48,22 2,17.52 2,12C2,6.48 6.48,2 12,2C17.52,2 22,6.48 22,12Z" 
+                                  Fill="{DynamicResource SukiLowText}"
+                                  Width="16" Height="16" Stretch="Uniform" />
+                        </Button>
                     </Grid>
                     <StackPanel x:Name="ConnectionButtonsPanel" Grid.Column="4" Orientation="Horizontal"
                                 VerticalAlignment="Center" Spacing="4">
@@ -1372,24 +1383,15 @@
                                VerticalAlignment="Center" />
                 </dashboard:DashboardCard.TitleContent>
                 <dashboard:DashboardCard.HeaderActions>
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="6"
-                                VerticalAlignment="Center">
-                        <ToggleSwitch x:Name="LiveViewBossKeyToggle"
-                                      IsChecked="{Binding EnableBossKey}"
-                                      ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.BossKey}}"
-                                      OffContent=""
-                                      OnContent="" />
-                        <ToggleSwitch x:Name="LiveViewFocusModeToggle"
-                                      IsChecked="{Binding EnableTaskFocusMode}"
-                                      ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}"
-                                      OffContent=""
-                                      OnContent="" />
+                    <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
                         <ToggleSwitch x:Name="LiveViewInteractiveToggle"
                                       IsChecked="{Binding EnableInteractiveLiveView}"
-                                      ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.InteractiveLiveView}}"
                                       OffContent=""
                                       OnContent="" />
+                        <TextBlock FontSize="9"
+                                   Foreground="{DynamicResource SukiLowText}"
+                                   VerticalAlignment="Center"
+                                   Text="{markup:I18n {x:Static helper:LangKeys.InteractiveLiveView}}" />
                     </StackPanel>
                 </dashboard:DashboardCard.HeaderActions>
                 <Grid IsVisible="{Binding IsLiveViewExpanded}"

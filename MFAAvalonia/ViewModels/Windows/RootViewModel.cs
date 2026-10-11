@@ -80,6 +80,7 @@ public partial class RootViewModel : ViewModelBase
         }
 
         UpdateCurrentInstanceIdle();
+        OnPropertyChanged(nameof(EnableTaskFocusMode));
     }
 
     private void OnActiveTaskQueueViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -87,6 +88,10 @@ public partial class RootViewModel : ViewModelBase
         if (e.PropertyName is nameof(TaskQueueViewModel.IsRunning) or nameof(TaskQueueViewModel.Idle))
         {
             UpdateCurrentInstanceIdle();
+        }
+        if (e.PropertyName is nameof(TaskQueueViewModel.EnableTaskFocusMode))
+        {
+            OnPropertyChanged(nameof(EnableTaskFocusMode));
         }
     }
 
@@ -97,11 +102,21 @@ public partial class RootViewModel : ViewModelBase
         Idle = isIdle;
     }
 
+    public bool EnableTaskFocusMode
+    {
+        get => _trackedActiveTaskQueueViewModel?.EnableTaskFocusMode ?? false;
+        set
+        {
+            if (_trackedActiveTaskQueueViewModel != null)
+                _trackedActiveTaskQueueViewModel.EnableTaskFocusMode = value;
+        }
+    }
+
     public static string Version
     {
         get
         {
-            var attr = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var attr = typeof(RootViewModel).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             return attr?.InformationalVersion ?? "v0.0.0";
         }
     }

@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2904,11 +2904,11 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
-        if (vm.IsRunning && vm.EnableTaskFocusMode && !_isTaskFocusModeActive)
+        if (vm.EnableTaskFocusMode && !_isTaskFocusModeActive)
         {
             EnterTaskFocusMode();
         }
-        else if (!vm.IsRunning && _isTaskFocusModeActive)
+        else if (!vm.EnableTaskFocusMode && _isTaskFocusModeActive)
         {
             ExitTaskFocusMode();
         }
@@ -2933,13 +2933,51 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
-        if (vm.IsRunning)
+        if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
         {
-            if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
-            {
-                return;
-            }
+            return;
+        }
 
+        var isMuMu = vm.Processor?.Config?.AdbDevice?.Name is string name
+                         && (name.Contains("MuMuPlayer12", StringComparison.OrdinalIgnoreCase)
+                             || name.Contains("MuMu", StringComparison.OrdinalIgnoreCase));
+
+        if (isMuMu)
+        {
+            if (EmulatorHelper.BossKeyToggleMuMu(vm.Processor, true))
+            {
+                _bossKeyIsMuMu = true;
+            }
+        }
+        else
+        {
+            _bossKeyHwnd = EmulatorHelper.FindTargetWindowHwnd(vm.Processor);
+            if (_bossKeyHwnd != IntPtr.Zero)
+            {
+                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
+            }
+        }
+    }
+
+    private void BossKeyToggleBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (DataContext is not TaskQueueViewModel vm) return;
+
+        if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
+        {
+            if (_bossKeyIsMuMu)
+            {
+                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
+                _bossKeyIsMuMu = false;
+            }
+            if (_bossKeyHwnd != IntPtr.Zero)
+            {
+                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
+                _bossKeyHwnd = IntPtr.Zero;
+            }
+        }
+        else
+        {
             var isMuMu = vm.Processor?.Config?.AdbDevice?.Name is string name
                          && (name.Contains("MuMuPlayer12", StringComparison.OrdinalIgnoreCase)
                              || name.Contains("MuMu", StringComparison.OrdinalIgnoreCase));
@@ -2958,19 +2996,6 @@ public partial class TaskQueueView : UserControl
                 {
                     EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
                 }
-            }
-        }
-        else if (!vm.IsRunning)
-        {
-            if (_bossKeyIsMuMu)
-            {
-                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
-                _bossKeyIsMuMu = false;
-            }
-            if (_bossKeyHwnd != IntPtr.Zero)
-            {
-                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
-                _bossKeyHwnd = IntPtr.Zero;
             }
         }
     }

@@ -202,6 +202,12 @@
         </MultiBinding>
     </suki:SukiWindow.Title>
     <suki:SukiWindow.RightWindowTitleBarControls>
+        <ToggleSwitch
+            IsChecked="{Binding EnableTaskFocusMode}"
+            OffContent=""
+            OnContent=""
+            ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}"
+            x:Name="btnTaskFocusMode" />
         <ToggleButton
             Classes="SP Basic Round"
             IsChecked="{Binding Topmost,RelativeSource={RelativeSource AncestorType={x:Type suki:SukiWindow}}, Mode=TwoWay}"
