@@ -202,12 +202,6 @@
         </MultiBinding>
     </suki:SukiWindow.Title>
     <suki:SukiWindow.RightWindowTitleBarControls>
-        <ToggleSwitch
-            IsChecked="{Binding EnableTaskFocusMode}"
-            OffContent=""
-            OnContent=""
-            ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}"
-            x:Name="btnTaskFocusMode" />
         <ToggleButton
             Classes="SP Basic Round"
             IsChecked="{Binding Topmost,RelativeSource={RelativeSource AncestorType={x:Type suki:SukiWindow}}, Mode=TwoWay}"
@@ -217,6 +211,17 @@
             </ToggleButton.RenderTransform>
             <PathIcon Data="{x:Static suki:Icons.Pin}" Width="16" Height="16"></PathIcon>
         </ToggleButton>
+        <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+            <ToggleSwitch
+                IsChecked="{Binding EnableTaskFocusMode}"
+                OffContent=""
+                OnContent=""
+                x:Name="btnTaskFocusMode" />
+            <TextBlock FontSize="10"
+                       Foreground="{DynamicResource SukiLowText}"
+                       VerticalAlignment="Center"
+                       Text="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}" />
+        </StackPanel>
     </suki:SukiWindow.RightWindowTitleBarControls>
     <suki:SukiWindow.LogoContent>
         <Image

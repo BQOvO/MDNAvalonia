@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2803,15 +2803,6 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
-        if (e.PropertyName == nameof(TaskQueueViewModel.EnableBossKey))
-        {
-            if (DataContext is TaskQueueViewModel vm)
-            {
-                ApplyBossKey(vm);
-            }
-            return;
-        }
-
         if (e.PropertyName == nameof(TaskQueueViewModel.CurrentController))
         {
             UpdateDeviceColumns();
@@ -2907,77 +2898,24 @@ public partial class TaskQueueView : UserControl
         if (vm.EnableTaskFocusMode && !_isTaskFocusModeActive)
         {
             EnterTaskFocusMode();
+            BossKeyToggleSimulator(vm, true);
         }
         else if (!vm.EnableTaskFocusMode && _isTaskFocusModeActive)
         {
             ExitTaskFocusMode();
-        }
-
-        ApplyBossKey(vm);
-    }
-
-    private void ApplyBossKey(TaskQueueViewModel vm)
-    {
-        if (!vm.EnableBossKey)
-        {
-            if (_bossKeyIsMuMu)
-            {
-                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
-                _bossKeyIsMuMu = false;
-            }
-            if (_bossKeyHwnd != IntPtr.Zero)
-            {
-                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
-                _bossKeyHwnd = IntPtr.Zero;
-            }
-            return;
-        }
-
-        if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
-        {
-            return;
-        }
-
-        var isMuMu = vm.Processor?.Config?.AdbDevice?.Name is string name
-                         && (name.Contains("MuMuPlayer12", StringComparison.OrdinalIgnoreCase)
-                             || name.Contains("MuMu", StringComparison.OrdinalIgnoreCase));
-
-        if (isMuMu)
-        {
-            if (EmulatorHelper.BossKeyToggleMuMu(vm.Processor, true))
-            {
-                _bossKeyIsMuMu = true;
-            }
-        }
-        else
-        {
-            _bossKeyHwnd = EmulatorHelper.FindTargetWindowHwnd(vm.Processor);
-            if (_bossKeyHwnd != IntPtr.Zero)
-            {
-                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
-            }
+            BossKeyToggleSimulator(vm, false);
         }
     }
 
-    private void BossKeyToggleBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        if (DataContext is not TaskQueueViewModel vm) return;
+    
 
-        if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
+    private void BossKeyToggleSimulator(TaskQueueViewModel vm, bool hide)
+    {
+        if (hide)
         {
-            if (_bossKeyIsMuMu)
-            {
-                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
-                _bossKeyIsMuMu = false;
-            }
-            if (_bossKeyHwnd != IntPtr.Zero)
-            {
-                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
-                _bossKeyHwnd = IntPtr.Zero;
-            }
-        }
-        else
-        {
+            if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
+                return;
+
             var isMuMu = vm.Processor?.Config?.AdbDevice?.Name is string name
                          && (name.Contains("MuMuPlayer12", StringComparison.OrdinalIgnoreCase)
                              || name.Contains("MuMu", StringComparison.OrdinalIgnoreCase));
@@ -2998,6 +2936,100 @@ public partial class TaskQueueView : UserControl
                 }
             }
         }
+        else
+        {
+            if (_bossKeyIsMuMu)
+            {
+                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
+                _bossKeyIsMuMu = false;
+            }
+            if (_bossKeyHwnd != IntPtr.Zero)
+            {
+                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
+                _bossKeyHwnd = IntPtr.Zero;
+            }
+        }
+    }
+
+    private bool _isLiveViewPointerDown;
+    private int _lastTouchX;
+    private int _lastTouchY;
+
+    private void LiveViewFrame_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (DataContext is not TaskQueueViewModel vm || !vm.EnableInteractiveLiveView)
+            return;
+        if (vm.Processor?.MaaTasker?.Controller is not { IsInitialized: true })
+            return;
+        if (LiveViewFrame is null || vm.LiveViewImage is null)
+            return;
+
+        var point = e.GetCurrentPoint(LiveViewFrame);
+        var pos = point.Position;
+        var (mappedX, mappedY) = MapLiveViewToScreen(pos.X, pos.Y, LiveViewFrame.Bounds.Size, vm.LiveViewImage.Size);
+        if (mappedX < 0 || mappedY < 0)
+            return;
+
+        _isLiveViewPointerDown = true;
+        _lastTouchX = mappedX;
+        _lastTouchY = mappedY;
+        _ = vm.Processor.MaaTasker.Controller.TouchDown(0, mappedX, mappedY, 1);
+    }
+
+    private void LiveViewFrame_PointerMoved(object? sender, PointerEventArgs e)
+    {
+        if (!_isLiveViewPointerDown)
+            return;
+        if (DataContext is not TaskQueueViewModel vm || !vm.EnableInteractiveLiveView)
+            return;
+        if (vm.Processor?.MaaTasker?.Controller is not { IsInitialized: true })
+            return;
+        if (LiveViewFrame is null || vm.LiveViewImage is null)
+            return;
+
+        var point = e.GetCurrentPoint(LiveViewFrame);
+        var pos = point.Position;
+        var (mappedX, mappedY) = MapLiveViewToScreen(pos.X, pos.Y, LiveViewFrame.Bounds.Size, vm.LiveViewImage.Size);
+        if (mappedX < 0 || mappedY < 0)
+            return;
+
+        _lastTouchX = mappedX;
+        _lastTouchY = mappedY;
+        _ = vm.Processor.MaaTasker.Controller.TouchMove(0, mappedX, mappedY, 1);
+    }
+
+    private void LiveViewFrame_PointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (!_isLiveViewPointerDown)
+            return;
+        _isLiveViewPointerDown = false;
+
+        if (DataContext is not TaskQueueViewModel vm || !vm.EnableInteractiveLiveView)
+            return;
+        if (vm.Processor?.MaaTasker?.Controller is not { IsInitialized: true })
+            return;
+
+        _ = vm.Processor.MaaTasker.Controller.TouchUp(0);
+    }
+
+    private static (int X, int Y) MapLiveViewToScreen(double viewX, double viewY, Avalonia.Size viewSize, Avalonia.Size imageSize)
+    {
+        if (imageSize.Width <= 0 || imageSize.Height <= 0)
+            return (-1, -1);
+
+        var scale = Math.Min(viewSize.Width / imageSize.Width, viewSize.Height / imageSize.Height);
+        var displayW = imageSize.Width * scale;
+        var displayH = imageSize.Height * scale;
+        var offsetX = (viewSize.Width - displayW) / 2;
+        var offsetY = (viewSize.Height - displayH) / 2;
+
+        var screenX = (int)((viewX - offsetX) / scale);
+        var screenY = (int)((viewY - offsetY) / scale);
+
+        screenX = Math.Clamp(screenX, 0, (int)imageSize.Width - 1);
+        screenY = Math.Clamp(screenY, 0, (int)imageSize.Height - 1);
+
+        return (screenX, screenY);
     }
 
     private void EnterTaskFocusMode()
