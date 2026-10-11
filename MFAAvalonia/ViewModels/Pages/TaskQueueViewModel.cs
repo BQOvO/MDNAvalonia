@@ -72,7 +72,7 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
         _enableLiveView = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableLiveView, true);
         _liveViewRefreshRate = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.LiveViewRefreshRate, 30.0);
         _enableTaskFocusMode = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableTaskFocusMode, true);
-        _enableBossKey = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableBossKey, false);
+        _enableBossKey = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableBossKey, true);
 
         // Initialize LiveView Timer
         _liveViewTimer = new System.Timers.Timer();
