@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿﻿#nullable enable
 using MFAAvalonia.Configuration;
 using MFAAvalonia.Extensions.MaaFW;
 using System;
@@ -19,6 +19,53 @@ public static class EmulatorHelper
     [DllImport("User32.dll", CharSet = CharSet.Auto)]
     [SupportedOSPlatform("windows")]
     private static extern int GetWindowThreadProcessId(IntPtr hwnd, out int id);
+
+    [DllImport("user32.dll")]
+    [SupportedOSPlatform("windows")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    private const int SW_HIDE = 0;
+    private const int SW_SHOW = 5;
+
+    public static void BossKeyHideWindow(IntPtr hWnd, bool hide)
+    {
+        if (!OperatingSystem.IsWindows() || hWnd == IntPtr.Zero)
+        {
+            return;
+        }
+
+        ShowWindow(hWnd, hide ? SW_HIDE : SW_SHOW);
+    }
+
+    public static IntPtr FindTargetWindowHwnd(MaaProcessor processor)
+    {
+        if (!OperatingSystem.IsWindows() || processor == null)
+        {
+            return IntPtr.Zero;
+        }
+
+        var controllerType = processor.ViewModel?.CurrentController;
+
+        if (controllerType == MaaControllerTypes.Win32 || controllerType == MaaControllerTypes.Gamepad)
+        {
+            var hwnd = processor.Config.DesktopWindow.HWnd;
+            if (hwnd != IntPtr.Zero)
+            {
+                return hwnd;
+            }
+        }
+
+        if (controllerType == MaaControllerTypes.Adb)
+        {
+            var windowName = processor.Config.AdbDevice.Name;
+            if (!string.IsNullOrWhiteSpace(windowName))
+            {
+                return FindWindow(null, windowName);
+            }
+        }
+
+        return IntPtr.Zero;
+    }
 
     /// <summary>
     /// 一个根据连接配置判断使用关闭模拟器的方式的方法

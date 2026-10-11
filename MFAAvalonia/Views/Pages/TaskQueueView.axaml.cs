@@ -1,4 +1,4 @@
-﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2885,6 +2885,8 @@ public partial class TaskQueueView : UserControl
         LiveViewCard.IsVisible = vm.EnableLiveView;
     }
 
+    private nint _bossKeyHwnd;
+
     private void ApplyTaskFocusMode()
     {
         if (OperatingSystem.IsAndroid() || DataContext is not TaskQueueViewModel vm)
@@ -2899,6 +2901,30 @@ public partial class TaskQueueView : UserControl
         else if (!vm.IsRunning && _isTaskFocusModeActive)
         {
             ExitTaskFocusMode();
+        }
+
+        ApplyBossKey(vm);
+    }
+
+    private void ApplyBossKey(TaskQueueViewModel vm)
+    {
+        if (!ConfigurationManager.Current.GetValue(ConfigurationKeys.ShouldMinimizeToTray, false))
+        {
+            return;
+        }
+
+        if (vm.IsRunning && _bossKeyHwnd == IntPtr.Zero)
+        {
+            _bossKeyHwnd = EmulatorHelper.FindTargetWindowHwnd(vm.Processor);
+            if (_bossKeyHwnd != IntPtr.Zero)
+            {
+                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
+            }
+        }
+        else if (!vm.IsRunning && _bossKeyHwnd != IntPtr.Zero)
+        {
+            EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
+            _bossKeyHwnd = IntPtr.Zero;
         }
     }
 
