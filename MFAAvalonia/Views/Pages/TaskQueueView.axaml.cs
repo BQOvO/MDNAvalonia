@@ -2930,6 +2930,11 @@ public partial class TaskQueueView : UserControl
         SetCardLayout(LogCard, 7, 0, 5, 8);
 
         TaskQueueDashboardGrid.SuppressLayoutSave = true;
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            Instances.RootViewModel.IsWindowVisible = false;
+        });
     }
 
     private void ExitTaskFocusMode()
@@ -2957,6 +2962,11 @@ public partial class TaskQueueView : UserControl
         }
 
         TaskQueueDashboardGrid.SuppressLayoutSave = false;
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            Instances.RootView.ShowWindow();
+        });
     }
 
     private void SaveCardLayout(string id, DashboardCard card)
