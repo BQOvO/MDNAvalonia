@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2925,6 +2925,7 @@ public partial class TaskQueueView : UserControl
                 if (EmulatorHelper.BossKeyToggleMuMu(vm.Processor, true))
                 {
                     _bossKeyIsMuMu = true;
+                    EmulatorHelper.RegisterBossKeyMuMuHide(vm.Processor);
                 }
             }
             else
@@ -2933,6 +2934,7 @@ public partial class TaskQueueView : UserControl
                 if (_bossKeyHwnd != IntPtr.Zero)
                 {
                     EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
+                    EmulatorHelper.RegisterBossKeyWindowHide(_bossKeyHwnd);
                 }
             }
         }
@@ -2942,10 +2944,12 @@ public partial class TaskQueueView : UserControl
             {
                 EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
                 _bossKeyIsMuMu = false;
+                EmulatorHelper.RegisterBossKeyMuMuShow();
             }
             if (_bossKeyHwnd != IntPtr.Zero)
             {
                 EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
+                EmulatorHelper.RegisterBossKeyWindowShow();
                 _bossKeyHwnd = IntPtr.Zero;
             }
         }

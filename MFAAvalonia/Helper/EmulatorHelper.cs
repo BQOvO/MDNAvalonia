@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿#nullable enable
+﻿﻿﻿﻿﻿﻿#nullable enable
 using MFAAvalonia.Configuration;
 using MFAAvalonia.Extensions.MaaFW;
 using System;
@@ -26,6 +26,47 @@ public static class EmulatorHelper
 
     private const int SW_HIDE = 0;
     private const int SW_SHOW = 5;
+
+    private static IntPtr _bossKeyHiddenHwnd;
+    private static bool _bossKeyMuMuHidden;
+    private static MaaProcessor? _bossKeyMuMuProcessor;
+
+    public static void RestoreAllBossKeyWindows()
+    {
+        if (_bossKeyMuMuHidden && _bossKeyMuMuProcessor != null)
+        {
+            BossKeyToggleMuMu(_bossKeyMuMuProcessor, false);
+            _bossKeyMuMuHidden = false;
+            _bossKeyMuMuProcessor = null;
+        }
+        if (_bossKeyHiddenHwnd != IntPtr.Zero)
+        {
+            ShowWindow(_bossKeyHiddenHwnd, SW_SHOW);
+            _bossKeyHiddenHwnd = IntPtr.Zero;
+        }
+    }
+
+    public static void RegisterBossKeyWindowHide(IntPtr hwnd)
+    {
+        _bossKeyHiddenHwnd = hwnd;
+    }
+
+    public static void RegisterBossKeyWindowShow()
+    {
+        _bossKeyHiddenHwnd = IntPtr.Zero;
+    }
+
+    public static void RegisterBossKeyMuMuHide(MaaProcessor processor)
+    {
+        _bossKeyMuMuHidden = true;
+        _bossKeyMuMuProcessor = processor;
+    }
+
+    public static void RegisterBossKeyMuMuShow()
+    {
+        _bossKeyMuMuHidden = false;
+        _bossKeyMuMuProcessor = null;
+    }
 
     public static void BossKeyHideWindow(IntPtr hWnd, bool hide)
     {

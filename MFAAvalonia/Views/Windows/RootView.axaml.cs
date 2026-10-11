@@ -261,6 +261,7 @@ public partial class RootView : SukiWindow
         }
 
         Instances.EnsureShutdownWatchdogStarted();
+        EmulatorHelper.RestoreAllBossKeyWindows();
         base.OnClosing(e);
     }
 
