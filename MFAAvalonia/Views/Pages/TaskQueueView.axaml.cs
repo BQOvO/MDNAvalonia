@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2885,8 +2885,6 @@ public partial class TaskQueueView : UserControl
         LiveViewCard.IsVisible = vm.EnableLiveView;
     }
 
-    private bool _isShouldMinimizeToTrayMinimized;
-
     private void ApplyTaskFocusMode()
     {
         if (OperatingSystem.IsAndroid() || DataContext is not TaskQueueViewModel vm)
@@ -2901,25 +2899,6 @@ public partial class TaskQueueView : UserControl
         else if (!vm.IsRunning && _isTaskFocusModeActive)
         {
             ExitTaskFocusMode();
-        }
-        else if (vm.IsRunning && !vm.EnableTaskFocusMode && ConfigurationManager.Current.GetValue(ConfigurationKeys.ShouldMinimizeToTray, false))
-        {
-            if (!_isShouldMinimizeToTrayMinimized)
-            {
-                _isShouldMinimizeToTrayMinimized = true;
-                Dispatcher.UIThread.Post(() =>
-                {
-                    Instances.RootViewModel.IsWindowVisible = false;
-                });
-            }
-        }
-        else if (!vm.IsRunning && _isShouldMinimizeToTrayMinimized)
-        {
-            _isShouldMinimizeToTrayMinimized = false;
-            Dispatcher.UIThread.Post(() =>
-            {
-                Instances.RootView.ShowWindow();
-            });
         }
     }
 
