@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2797,9 +2797,9 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
-        if (e.PropertyName == nameof(TaskQueueViewModel.EnableTaskFocusMode))
+        if (e.PropertyName == nameof(TaskQueueViewModel.IsFocusModeActive))
         {
-            ApplyTaskFocusMode();
+            ApplyManualFocusMode();
             return;
         }
 
@@ -2895,12 +2895,33 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
-        if (vm.EnableTaskFocusMode && !_isTaskFocusModeActive)
+        if (vm.EnableTaskFocusMode && vm.IsRunning && !_isTaskFocusModeActive)
+        {
+            EnterTaskFocusMode();
+            BossKeyToggleSimulator(vm, true);
+            vm.IsFocusModeActive = true;
+        }
+        else if (!vm.IsRunning && _isTaskFocusModeActive)
+        {
+            ExitTaskFocusMode();
+            BossKeyToggleSimulator(vm, false);
+            vm.IsFocusModeActive = false;
+        }
+    }
+
+    private void ApplyManualFocusMode()
+    {
+        if (OperatingSystem.IsAndroid() || DataContext is not TaskQueueViewModel vm)
+        {
+            return;
+        }
+
+        if (vm.IsFocusModeActive && !_isTaskFocusModeActive)
         {
             EnterTaskFocusMode();
             BossKeyToggleSimulator(vm, true);
         }
-        else if (!vm.EnableTaskFocusMode && _isTaskFocusModeActive)
+        else if (!vm.IsFocusModeActive && _isTaskFocusModeActive)
         {
             ExitTaskFocusMode();
             BossKeyToggleSimulator(vm, false);

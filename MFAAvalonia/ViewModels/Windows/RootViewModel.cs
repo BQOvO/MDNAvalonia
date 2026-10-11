@@ -93,6 +93,10 @@ public partial class RootViewModel : ViewModelBase
         {
             OnPropertyChanged(nameof(EnableTaskFocusMode));
         }
+        if (e.PropertyName is nameof(TaskQueueViewModel.IsFocusModeActive))
+        {
+            OnPropertyChanged(nameof(IsFocusModeActive));
+        }
     }
 
     private void UpdateCurrentInstanceIdle()
@@ -109,6 +113,16 @@ public partial class RootViewModel : ViewModelBase
         {
             if (_trackedActiveTaskQueueViewModel != null)
                 _trackedActiveTaskQueueViewModel.EnableTaskFocusMode = value;
+        }
+    }
+
+    public bool IsFocusModeActive
+    {
+        get => _trackedActiveTaskQueueViewModel?.IsFocusModeActive ?? false;
+        set
+        {
+            if (_trackedActiveTaskQueueViewModel != null)
+                _trackedActiveTaskQueueViewModel.IsFocusModeActive = value;
         }
     }
 

@@ -213,11 +213,11 @@
         </ToggleButton>
         <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
             <ToggleSwitch
-                IsChecked="{Binding EnableTaskFocusMode}"
+                IsChecked="{Binding IsFocusModeActive}"
                 OffContent=""
                 OnContent=""
                 x:Name="btnTaskFocusMode" />
-            <TextBlock FontSize="10"
+            <TextBlock FontSize="12"
                        Foreground="{DynamicResource SukiLowText}"
                        VerticalAlignment="Center"
                        Text="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}" />

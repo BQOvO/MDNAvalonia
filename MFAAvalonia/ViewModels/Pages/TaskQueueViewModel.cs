@@ -71,7 +71,7 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
         _currentResource = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.Resource, string.Empty);
         _enableLiveView = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableLiveView, true);
         _liveViewRefreshRate = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.LiveViewRefreshRate, 30.0);
-        _enableTaskFocusMode = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableTaskFocusMode, true);
+        _enableTaskFocusMode = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableTaskFocusMode, false);
         _enableBossKey = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableBossKey, true);
         _enableInteractiveLiveView = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableInteractiveLiveView, false);
 
@@ -3490,6 +3490,11 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
     {
         Processor.InstanceConfiguration.SetValue(ConfigurationKeys.EnableTaskFocusMode, value);
     }
+
+    /// <summary>
+    /// 主界面标题栏的即时专注模式开关，不持久化，不影响设置里的偏好
+    /// </summary>
+    [ObservableProperty] private bool _isFocusModeActive;
 
     [ObservableProperty] private bool _enableBossKey;
 
