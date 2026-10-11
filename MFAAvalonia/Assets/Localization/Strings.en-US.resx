@@ -1646,6 +1646,9 @@
     <data name="BossKey" xml:space="preserve">
         <value>Boss Key</value>
     </data>
+    <data name="InteractiveLiveView" xml:space="preserve">
+        <value>Interactive Live View</value>
+    </data>
     <data name="PlayCoverAddress" xml:space="preserve">
         <value>Address</value>
     </data>

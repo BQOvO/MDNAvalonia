@@ -1872,7 +1872,10 @@
     <data name="BossKey" xml:space="preserve">
         <value>ボスキー</value>
     </data>
-  <data name="PlayCoverAddress" xml:space="preserve">
+    <data name="InteractiveLiveView" xml:space="preserve">
+        <value>インタラクティブライブビュー</value>
+    </data>
+    <data name="PlayCoverAddress" xml:space="preserve">
         <value>住所</value>
     </data>
   <data name="PlayCoverBundleIdentifier" xml:space="preserve">

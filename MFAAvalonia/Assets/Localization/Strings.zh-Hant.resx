@@ -1640,6 +1640,9 @@
     <data name="BossKey" xml:space="preserve">
         <value>任務老闆鍵</value>
     </data>
+    <data name="InteractiveLiveView" xml:space="preserve">
+        <value>互動式即時視圖</value>
+    </data>
     <data name="PlayCoverAddress" xml:space="preserve">
         <value>位址</value>
     </data>

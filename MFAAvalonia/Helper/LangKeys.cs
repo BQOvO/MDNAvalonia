@@ -570,6 +570,7 @@ public static class LangKeys
 	public static readonly string LiveView = "LiveView";
     public static readonly string TaskFocusMode = "TaskFocusMode";
     public static readonly string BossKey = "BossKey";
+    public static readonly string InteractiveLiveView = "InteractiveLiveView";
 	public static readonly string LiveViewNoImageReasonAdb = "LiveViewNoImageReasonAdb";
 	public static readonly string LiveViewNoImageReasonWindow = "LiveViewNoImageReasonWindow";
 	public static readonly string LiveViewNoImageWarning = "LiveViewNoImageWarning";

@@ -1371,6 +1371,27 @@
                                Text="{markup:I18n {x:Static helper:LangKeys.LiveView}}"
                                VerticalAlignment="Center" />
                 </dashboard:DashboardCard.TitleContent>
+                <dashboard:DashboardCard.HeaderActions>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="6"
+                                VerticalAlignment="Center">
+                        <ToggleSwitch x:Name="LiveViewBossKeyToggle"
+                                      IsChecked="{Binding EnableBossKey}"
+                                      ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.BossKey}}"
+                                      OffContent=""
+                                      OnContent="" />
+                        <ToggleSwitch x:Name="LiveViewFocusModeToggle"
+                                      IsChecked="{Binding EnableTaskFocusMode}"
+                                      ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}"
+                                      OffContent=""
+                                      OnContent="" />
+                        <ToggleSwitch x:Name="LiveViewInteractiveToggle"
+                                      IsChecked="{Binding EnableInteractiveLiveView}"
+                                      ToolTip.Tip="{markup:I18n {x:Static helper:LangKeys.InteractiveLiveView}}"
+                                      OffContent=""
+                                      OnContent="" />
+                    </StackPanel>
+                </dashboard:DashboardCard.HeaderActions>
                 <Grid IsVisible="{Binding IsLiveViewExpanded}"
                       Margin="0,8,0,0"
                       HorizontalAlignment="Center"

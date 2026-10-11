@@ -206,6 +206,7 @@ public static class ConfigurationKeys
     public const string LiveViewRefreshRate = "UI.LiveView.RefreshRate";
     public const string EnableTaskFocusMode = "UI.TaskFocusMode.Enable";
     public const string EnableBossKey = "UI.BossKey.Enable";
+    public const string EnableInteractiveLiveView = "UI.LiveView.Interactive";
     public const string MainWindowWidth = "UI.MainWindow.Width";
     public const string MainWindowHeight = "UI.MainWindow.Height";
     public const string MainWindowPositionX = "UI.MainWindow.PositionX";
@@ -258,6 +259,7 @@ public static class ConfigurationKeys
         LiveViewRefreshRate,
         EnableTaskFocusMode,
         EnableBossKey,
+        EnableInteractiveLiveView,
         Prescript,
         Postscript,
         ContinueRunningWhenError,
