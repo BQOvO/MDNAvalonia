@@ -204,6 +204,7 @@ public static class ConfigurationKeys
     public const string DashboardCardGridResourceLayoutHash = "UI.DashboardCardGrid.ResourceLayoutHash";
     public const string EnableLiveView = "UI.LiveView.EnableLiveView";
     public const string LiveViewRefreshRate = "UI.LiveView.RefreshRate";
+    public const string EnableTaskFocusMode = "UI.TaskFocusMode.Enable";
     public const string MainWindowWidth = "UI.MainWindow.Width";
     public const string MainWindowHeight = "UI.MainWindow.Height";
     public const string MainWindowPositionX = "UI.MainWindow.PositionX";
@@ -254,6 +255,7 @@ public static class ConfigurationKeys
         Resource,
         EnableLiveView,
         LiveViewRefreshRate,
+        EnableTaskFocusMode,
         Prescript,
         Postscript,
         ContinueRunningWhenError,

@@ -71,6 +71,7 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
         _currentResource = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.Resource, string.Empty);
         _enableLiveView = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableLiveView, true);
         _liveViewRefreshRate = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.LiveViewRefreshRate, 30.0);
+        _enableTaskFocusMode = _processorField.InstanceConfiguration.GetValue(ConfigurationKeys.EnableTaskFocusMode, true);
 
         // Initialize LiveView Timer
         _liveViewTimer = new System.Timers.Timer();
@@ -3476,6 +3477,16 @@ public partial class TaskQueueViewModel : ViewModelBase, IDisposable
     {
         OnPropertyChanged(nameof(IsLiveViewVisible));
         Processor.InstanceConfiguration.SetValue(ConfigurationKeys.EnableLiveView, value);
+    }
+
+    /// <summary>
+    /// 任务专注模式：任务运行后自动隐藏其他卡片，仅保留实时视图和日志
+    /// </summary>
+    [ObservableProperty] private bool _enableTaskFocusMode;
+
+    partial void OnEnableTaskFocusModeChanged(bool value)
+    {
+        Processor.InstanceConfiguration.SetValue(ConfigurationKeys.EnableTaskFocusMode, value);
     }
 
     partial void OnLiveViewRefreshRateChanged(double value)

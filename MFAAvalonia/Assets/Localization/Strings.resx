@@ -1650,6 +1650,9 @@
     <data name="LiveViewRefreshRate" xml:space="preserve">
         <value>实时视图最高刷新率 (FPS)</value>
     </data>
+    <data name="TaskFocusMode" xml:space="preserve">
+        <value>任务专注模式</value>
+    </data>
     <data name="PlayCoverAddress" xml:space="preserve">
         <value>地址</value>
     </data>
@@ -2254,11 +2257,3 @@
   <data name="AndroidCurrentScreenMode" xml:space="preserve"><value>前台模式 · 当前屏</value></data>
   <data name="CurrentScreen" xml:space="preserve"><value>当前屏幕</value></data>
 </root>
-
-
-
-
-
-
-
-

@@ -96,6 +96,15 @@ public sealed class DashboardCardGrid : Panel
     private bool _isUpdatingPreviewHost;
     private bool _layoutLoaded;
     private bool _suppressLayoutSave;
+
+    /// <summary>
+    /// 外部控制的布局保存抑制，用于任务专注模式等场景
+    /// </summary>
+    internal bool SuppressLayoutSave
+    {
+        get => _suppressLayoutSave;
+        set => _suppressLayoutSave = value;
+    }
     private DashboardCard? _resizingCard;
     private int _resizeStartCol;
     private int _resizeStartRow;

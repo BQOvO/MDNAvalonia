@@ -568,6 +568,7 @@ public static class LangKeys
 	public static readonly string ResourcePresetConfig = "ResourcePresetConfig";
 	public static readonly string UseFingerprintMatching = "UseFingerprintMatching";
 	public static readonly string LiveView = "LiveView";
+    public static readonly string TaskFocusMode = "TaskFocusMode";
 	public static readonly string LiveViewNoImageReasonAdb = "LiveViewNoImageReasonAdb";
 	public static readonly string LiveViewNoImageReasonWindow = "LiveViewNoImageReasonWindow";
 	public static readonly string LiveViewNoImageWarning = "LiveViewNoImageWarning";
@@ -726,5 +727,3 @@ public static class LangKeys
 	public static readonly string ImportInstanceConfigUnsupportedVersion = "ImportInstanceConfigUnsupportedVersion";
 	
 }
-
-

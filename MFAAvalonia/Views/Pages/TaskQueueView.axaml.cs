@@ -53,6 +53,10 @@ public partial class TaskQueueView : UserControl
     private const double TopToolbarCompactWidthThreshold = 980;
     private bool _isTopToolbarCompact;
 
+    // 任务专注模式
+    private bool _isTaskFocusModeActive;
+    private readonly Dictionary<string, (int Column, int Row, int ColumnSpan, int RowSpan)> _originalCardLayouts = new();
+
 
     public TaskQueueView()
     {
@@ -2786,6 +2790,18 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
+        if (e.PropertyName == nameof(TaskQueueViewModel.IsRunning))
+        {
+            ApplyTaskFocusMode();
+            return;
+        }
+
+        if (e.PropertyName == nameof(TaskQueueViewModel.EnableTaskFocusMode))
+        {
+            ApplyTaskFocusMode();
+            return;
+        }
+
         if (e.PropertyName == nameof(TaskQueueViewModel.CurrentController))
         {
             UpdateDeviceColumns();
@@ -2866,6 +2882,102 @@ public partial class TaskQueueView : UserControl
         }
 
         LiveViewCard.IsVisible = vm.EnableLiveView;
+    }
+
+    private void ApplyTaskFocusMode()
+    {
+        if (DataContext is not TaskQueueViewModel vm)
+        {
+            return;
+        }
+
+        if (vm.IsRunning && vm.EnableTaskFocusMode && !_isTaskFocusModeActive)
+        {
+            EnterTaskFocusMode();
+        }
+        else if (!vm.IsRunning && _isTaskFocusModeActive)
+        {
+            ExitTaskFocusMode();
+        }
+    }
+
+    private void EnterTaskFocusMode()
+    {
+        if (TaskQueueDashboardGrid == null || SettingCard == null ||
+            TaskListCard == null || IntroductionCard == null ||
+            LiveViewCard == null || LogCard == null)
+        {
+            return;
+        }
+
+        _isTaskFocusModeActive = true;
+        _originalCardLayouts.Clear();
+
+        SaveCardLayout("settings", SettingCard);
+        SaveCardLayout("task_list", TaskListCard);
+        SaveCardLayout("task_desc", IntroductionCard);
+        SaveCardLayout("live_view", LiveViewCard);
+        SaveCardLayout("log", LogCard);
+
+        SettingCard.IsVisible = false;
+        TaskListCard.IsVisible = false;
+        IntroductionCard.IsVisible = false;
+
+        LiveViewCard.IsVisible = true;
+        LogCard.IsVisible = true;
+
+        SetCardLayout(LiveViewCard, 0, 0, 7, 8);
+        SetCardLayout(LogCard, 7, 0, 5, 8);
+
+        TaskQueueDashboardGrid.SuppressLayoutSave = true;
+    }
+
+    private void ExitTaskFocusMode()
+    {
+        if (TaskQueueDashboardGrid == null)
+        {
+            return;
+        }
+
+        _isTaskFocusModeActive = false;
+
+        RestoreCardLayout("live_view", LiveViewCard);
+        RestoreCardLayout("log", LogCard);
+        RestoreCardLayout("settings", SettingCard);
+        RestoreCardLayout("task_list", TaskListCard);
+        RestoreCardLayout("task_desc", IntroductionCard);
+
+        SettingCard.IsVisible = true;
+        TaskListCard.IsVisible = true;
+        IntroductionCard.IsVisible = true;
+
+        if (DataContext is TaskQueueViewModel vm)
+        {
+            LiveViewCard.IsVisible = vm.EnableLiveView;
+        }
+
+        TaskQueueDashboardGrid.SuppressLayoutSave = false;
+    }
+
+    private void SaveCardLayout(string id, DashboardCard card)
+    {
+        _originalCardLayouts[id] = (card.GridColumn, card.GridRow, card.GridColumnSpan, card.GridRowSpan);
+    }
+
+    private void RestoreCardLayout(string id, DashboardCard card)
+    {
+        if (_originalCardLayouts.TryGetValue(id, out var layout))
+        {
+            SetCardLayout(card, layout.Column, layout.Row, layout.ColumnSpan, layout.RowSpan);
+        }
+    }
+
+    private static void SetCardLayout(DashboardCard card, int column, int row, int columnSpan, int rowSpan)
+    {
+        card.GridColumn = column;
+        card.GridRow = row;
+        card.GridColumnSpan = columnSpan;
+        card.GridRowSpan = rowSpan;
     }
 
     private void OnSetOptionRequested(DragItemViewModel item, bool value)

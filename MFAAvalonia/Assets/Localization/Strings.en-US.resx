@@ -1640,6 +1640,9 @@
     <data name="LiveViewRefreshRate" xml:space="preserve">
         <value>Live View Max Refresh Rate (FPS)</value>
     </data>
+    <data name="TaskFocusMode" xml:space="preserve">
+        <value>Task Focus Mode</value>
+    </data>
     <data name="PlayCoverAddress" xml:space="preserve">
         <value>Address</value>
     </data>
@@ -2244,11 +2247,3 @@ Update using this archive?</value>
   <data name="AndroidCurrentScreenMode" xml:space="preserve"><value>Foreground · Current screen</value></data>
   <data name="CurrentScreen" xml:space="preserve"><value>Current screen</value></data>
 </root>
-
-
-
-
-
-
-
-

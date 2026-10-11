@@ -181,5 +181,25 @@
                 </DockPanel>
             </StackPanel>
         </suki:GlassCard>
+        <!-- Task Focus Mode Setting -->
+        <suki:GlassCard Margin="0,25,0,0" Padding="25,10,25,10">
+            <StackPanel>
+                <DockPanel>
+                    <ToggleSwitch
+                        Classes="Switch"
+                        DockPanel.Dock="Right"
+                        IsChecked="{Binding Source={x:Static helper:Instances.InstanceTabBarViewModel}, Path=ActiveTab.TaskQueueViewModel.EnableTaskFocusMode}"
+                        IsEnabled="{Binding Idle, Source={x:Static helper:Instances.RootViewModel}}"
+                        VerticalAlignment="Top" />
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="{markup:I18n {x:Static helper:LangKeys.TaskFocusMode}}"
+                            VerticalAlignment="Center" />
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </suki:GlassCard>
     </StackPanel>
 </UserControl>

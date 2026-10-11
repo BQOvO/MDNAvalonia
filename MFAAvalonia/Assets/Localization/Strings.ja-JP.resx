@@ -1866,6 +1866,9 @@
   <data name="LiveViewRefreshRate" xml:space="preserve">
         <value>ライブビューの最大リフレッシュ レート (FPS)</value>
     </data>
+  <data name="TaskFocusMode" xml:space="preserve">
+        <value>タスクフォーカスモード</value>
+    </data>
   <data name="PlayCoverAddress" xml:space="preserve">
         <value>住所</value>
     </data>
