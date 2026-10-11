@@ -1,4 +1,4 @@
-﻿﻿#nullable enable
+﻿﻿﻿﻿﻿#nullable enable
 using MFAAvalonia.Configuration;
 using MFAAvalonia.Extensions.MaaFW;
 using System;
@@ -237,6 +237,129 @@ public static class EmulatorHelper
 
         LoggerHelper.Error("未在预期位置找到 MuMuManager.exe，准备改为按窗口关闭模拟器。");
         return KillEmulatorByWindow(processor);
+    }
+
+    public static bool BossKeyToggleMuMu(MaaProcessor processor, bool hide)
+    {
+        if (!OperatingSystem.IsWindows() || processor == null)
+        {
+            return false;
+        }
+
+        var address = processor.Config.AdbDevice.AdbSerial;
+        int emuIndex;
+
+        if (address.Equals("127.0.0.1:7555", StringComparison.OrdinalIgnoreCase) || address.Equals("127.0.0.1:5555", StringComparison.OrdinalIgnoreCase))
+        {
+            emuIndex = 0;
+        }
+        else if (address.Contains(':'))
+        {
+            var portStr = address.Split(':')[1];
+            if (!int.TryParse(portStr, out var port))
+            {
+                return false;
+            }
+
+            switch (port)
+            {
+                case >= 16384:
+                    emuIndex = (port - 16384) / 32;
+                    break;
+                case 7555:
+                    emuIndex = 0;
+                    break;
+                case >= 5555:
+                    emuIndex = (port - 5555) / 2;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        else if (address.StartsWith("emulator-", StringComparison.OrdinalIgnoreCase))
+        {
+            var parts = address.Split('-');
+            if (parts.Length >= 2 && int.TryParse(parts[1], out var port))
+            {
+                emuIndex = (port - 5554) / 2;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+
+        var processes = Process.GetProcessesByName("MuMuNxDevice");
+        if (processes.Length == 0)
+        {
+            processes = Process.GetProcessesByName("MuMuPlayer");
+        }
+
+        if (processes.Length == 0)
+        {
+            return false;
+        }
+
+        string? emulatorExePath;
+        try
+        {
+            emulatorExePath = processes[0].MainModule?.FileName;
+        }
+        catch
+        {
+            return false;
+        }
+
+        if (emulatorExePath == null)
+        {
+            return false;
+        }
+
+        var installPath = Path.GetFullPath(
+            Path.GetFileName(emulatorExePath).Equals("MuMuNxDevice.exe", StringComparison.OrdinalIgnoreCase)
+                ? Path.Combine(Path.GetDirectoryName(emulatorExePath)!, "..", "..", "..")
+                : Path.Combine(Path.GetDirectoryName(emulatorExePath)!, ".."));
+
+        var newConsolePath = Path.Combine(installPath, "nx_main", "MuMuManager.exe");
+        var oldConsolePath = Path.Combine(installPath, "shell", "MuMuManager.exe");
+
+        string? consolePath = null;
+        if (File.Exists(newConsolePath))
+        {
+            consolePath = newConsolePath;
+        }
+        else if (File.Exists(oldConsolePath))
+        {
+            consolePath = oldConsolePath;
+        }
+
+        if (consolePath == null)
+        {
+            return false;
+        }
+
+        var action = hide ? "hide_window" : "show_window";
+        var startInfo = new ProcessStartInfo(consolePath)
+        {
+            Arguments = $"control -v {emuIndex} {action}",
+            CreateNoWindow = true,
+            UseShellExecute = false,
+        };
+
+        try
+        {
+            var process = Process.Start(startInfo);
+            return process != null;
+        }
+        catch (Exception ex)
+        {
+            LoggerHelper.Error($"MuMuManager boss key failed: {ex.Message}");
+            return false;
+        }
     }
 
     /// <summary>

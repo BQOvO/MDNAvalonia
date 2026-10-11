@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -2895,6 +2895,7 @@ public partial class TaskQueueView : UserControl
     }
 
     private nint _bossKeyHwnd;
+    private bool _bossKeyIsMuMu;
 
     private void ApplyTaskFocusMode()
     {
@@ -2919,6 +2920,11 @@ public partial class TaskQueueView : UserControl
     {
         if (!vm.EnableBossKey)
         {
+            if (_bossKeyIsMuMu)
+            {
+                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
+                _bossKeyIsMuMu = false;
+            }
             if (_bossKeyHwnd != IntPtr.Zero)
             {
                 EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
@@ -2927,18 +2933,45 @@ public partial class TaskQueueView : UserControl
             return;
         }
 
-        if (vm.IsRunning && _bossKeyHwnd == IntPtr.Zero)
+        if (vm.IsRunning)
         {
-            _bossKeyHwnd = EmulatorHelper.FindTargetWindowHwnd(vm.Processor);
-            if (_bossKeyHwnd != IntPtr.Zero)
+            if (_bossKeyIsMuMu || _bossKeyHwnd != IntPtr.Zero)
             {
-                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
+                return;
+            }
+
+            var isMuMu = vm.Processor?.Config?.AdbDevice?.Name is string name
+                         && (name.Contains("MuMuPlayer12", StringComparison.OrdinalIgnoreCase)
+                             || name.Contains("MuMu", StringComparison.OrdinalIgnoreCase));
+
+            if (isMuMu)
+            {
+                if (EmulatorHelper.BossKeyToggleMuMu(vm.Processor, true))
+                {
+                    _bossKeyIsMuMu = true;
+                }
+            }
+            else
+            {
+                _bossKeyHwnd = EmulatorHelper.FindTargetWindowHwnd(vm.Processor);
+                if (_bossKeyHwnd != IntPtr.Zero)
+                {
+                    EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, true);
+                }
             }
         }
-        else if (!vm.IsRunning && _bossKeyHwnd != IntPtr.Zero)
+        else if (!vm.IsRunning)
         {
-            EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
-            _bossKeyHwnd = IntPtr.Zero;
+            if (_bossKeyIsMuMu)
+            {
+                EmulatorHelper.BossKeyToggleMuMu(vm.Processor, false);
+                _bossKeyIsMuMu = false;
+            }
+            if (_bossKeyHwnd != IntPtr.Zero)
+            {
+                EmulatorHelper.BossKeyHideWindow(_bossKeyHwnd, false);
+                _bossKeyHwnd = IntPtr.Zero;
+            }
         }
     }
 
