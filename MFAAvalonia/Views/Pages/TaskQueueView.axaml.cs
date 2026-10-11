@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -3065,11 +3065,6 @@ public partial class TaskQueueView : UserControl
         SetCardLayout(LogCard, 7, 0, 5, 8);
 
         TaskQueueDashboardGrid.SuppressLayoutSave = true;
-
-        Dispatcher.UIThread.Post(() =>
-        {
-            Instances.RootViewModel.IsWindowVisible = false;
-        });
     }
 
     private void ExitTaskFocusMode()

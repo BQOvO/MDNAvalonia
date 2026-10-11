@@ -1378,7 +1378,7 @@
                                       IsChecked="{Binding EnableInteractiveLiveView}"
                                       OffContent=""
                                       OnContent="" />
-                        <TextBlock FontSize="9"
+                        <TextBlock FontSize="12"
                                    Foreground="{DynamicResource SukiLowText}"
                                    VerticalAlignment="Center"
                                    Text="{markup:I18n {x:Static helper:LangKeys.InteractiveLiveView}}" />
