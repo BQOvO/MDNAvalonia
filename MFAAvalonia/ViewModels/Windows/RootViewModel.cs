@@ -9,6 +9,7 @@ using MFAAvalonia.ViewModels.Other;
 using SukiUI.Dialogs;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.ComponentModel;
 using MFAAvalonia.ViewModels.Pages;
 
@@ -100,12 +101,8 @@ public partial class RootViewModel : ViewModelBase
     {
         get
         {
-            // var version = Assembly.GetExecutingAssembly().GetName().Version;
-            // var major = version.Major;
-            // var minor = version.Minor >= 0 ? version.Minor : 0;
-            // var patch = version.Build >= 0 ? version.Build : 0;
-            // return $"v{SemVersion.Parse($"{major}.{minor}.{patch}")}";
-            return "v2.16.3-beta.1"; // Hardcoded version for now, replace with dynamic versioning later
+            var attr = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            return attr?.InformationalVersion ?? "v0.0.0";
         }
     }
 
