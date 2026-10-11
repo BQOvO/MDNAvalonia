@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿﻿﻿<UserControl
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d"
@@ -182,7 +182,7 @@
             </StackPanel>
         </suki:GlassCard>
         <!-- Task Focus Mode Setting -->
-        <suki:GlassCard Margin="0,25,0,0" Padding="25,10,25,10">
+        <suki:GlassCard x:Name="TaskFocusModeCard" Margin="0,25,0,0" Padding="25,10,25,10">
             <StackPanel>
                 <DockPanel>
                     <ToggleSwitch

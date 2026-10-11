@@ -1,4 +1,4 @@
-﻿using Avalonia;
+﻿﻿﻿﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -18,6 +18,7 @@ using MFAAvalonia.Helper.ValueType;
 using MFAAvalonia.ViewModels.Pages;
 using MFAAvalonia.ViewModels.UsersControls;
 using MFAAvalonia.Views.UserControls;
+using MFAAvalonia.Views.UserControls.Dashboard;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -2886,7 +2887,7 @@ public partial class TaskQueueView : UserControl
 
     private void ApplyTaskFocusMode()
     {
-        if (DataContext is not TaskQueueViewModel vm)
+        if (OperatingSystem.IsAndroid() || DataContext is not TaskQueueViewModel vm)
         {
             return;
         }
